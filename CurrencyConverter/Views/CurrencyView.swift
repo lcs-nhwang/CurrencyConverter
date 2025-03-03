@@ -13,7 +13,6 @@ struct CurrencyView: View {
     //MARK: Computed Properties
     var body: some View {
         VStack {
-            Spacer()
             if let currency = viewModel.currency {
                 VStack(alignment: .center) {
                     Text("CAD: \(currency.cad) equals")
@@ -29,10 +28,49 @@ struct CurrencyView: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
                 .frame(height:300)
+                //BUTTON
+                Button {
+                    viewModel.saveResult()
+                    // DEBUG: Show how many items are in the resultHistory array
+                    print("There are \(viewModel.resultHistory.count) elements in the resultHistory array.")
+                } label: {
+                    Text("Save")
+                }
+                .buttonStyle(.borderedProminent)
+                .padding(.bottom)
+                
+            } else {
+                
+                // Show a message indicating that we are
+                // awaiting reasonable input
+                ContentUnavailableView(
+                    "Unable to evaluate currency",
+                    systemImage: "gear.badge.questionmark",
+                    description: Text(viewModel.recoverySuggestion)
+                )
+                .frame(height: 300)
             }
+            // INPUT
+            TextField("CAD", text: $viewModel.providedCad)
+                .textFieldStyle(.roundedBorder)
+            
+            // Show a title for the history
+            HStack {
+                Text("History")
+                    .bold()
+                Spacer()
+            }
+            .padding(.vertical)
+             
+            // Iterate over the history of results
+            List(viewModel.resultHistory) { priorResult in
+                CurrencyItemView(currency: priorResult)
+            }
+            .listStyle(.plain)
             
         }
         .padding()
+        .navigationTitle("Currency Converter")
     }
 }
 
