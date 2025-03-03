@@ -13,9 +13,11 @@ struct CurrencyView: View {
     //MARK: Computed Properties
     var body: some View {
         VStack {
+            Spacer()
             if let currency = viewModel.currency {
+                
                 VStack(alignment: .center) {
-                    Text("CAD: \(currency.cad) equals")
+                    Text("CAD: \(currency.cad.formatted()) equals")
                         .font(.system(size: 36))
                     Spacer()
                     Text("USD: \(currency.usd.formatted())")
@@ -75,5 +77,7 @@ struct CurrencyView: View {
 }
 
 #Preview {
-    CurrencyView()
+    NavigationStack{
+        CurrencyView()
+    }
 }

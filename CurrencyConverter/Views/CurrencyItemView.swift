@@ -8,11 +8,36 @@
 import SwiftUI
 
 struct CurrencyItemView: View {
+    
+    // MARK: Stored properties
+    let currency: Currency
+    
+    // MARK: Computed properties
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        HStack(alignment: .center) {
+            Text("CAD: \(currency.cad.formatted())")
+                .font(.system(size:20))
+            Text("USD: \(currency.usd.formatted())")
+            Text("UK: \(currency.ukPound.formatted())")
+            Text("Euros: \(currency.euro.formatted())")
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.5)
+        
     }
 }
-
+ 
 #Preview {
-    CurrencyItemView()
+    List {
+        CurrencyItemView(currency: Currency(cad: 1))
+        CurrencyItemView(currency: Currency(cad: 10))
+        CurrencyItemView(currency: Currency(cad: 12))
+        CurrencyItemView(currency: Currency(cad: 13))
+        CurrencyItemView(currency: Currency(cad: 14))
+        CurrencyItemView(currency: Currency(cad: 15))
+        CurrencyItemView(currency: Currency(cad: 16))
+
+    }
+    .listStyle(.plain)
 }
